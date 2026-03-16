@@ -3,8 +3,9 @@
 
 import { useState, useEffect } from "react";
 import './styles.css'
+import { User } from "@/lib/db";
 
-type User = {id: number, name: string, email: string}
+// type User = {id: number, name: string, email: string}
 
 
 export default function Home() {

@@ -1,9 +1,5 @@
 import { NextResponse, userAgentFromString } from "next/server";
-
-let users = [
-    { id: 1, name: "Bob", email: "bob@gmail.com" },
-    { id: 2, name: "Harvey", email: "harv@gmail.com" }
-];
+import { users } from "@/lib/db";
 
 export async function GET() {
     return NextResponse.json(users);
