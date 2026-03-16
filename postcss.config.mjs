@@ -4,4 +4,6 @@ const config = {
   },
 };
 
+//unsure to keep, probably wont use tailwind but just in case
+
 export default config;
