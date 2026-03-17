@@ -34,6 +34,16 @@
     padding: 5px;
 }
 
+.buttons button:hover{
+    background-color: rgb(83, 119, 196);
+}
+
+.buttons button:active{
+    background-color: rgb(50, 91, 179);
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 #000;  
+}
+
 .card_container {
     display: flex;
     justify-content: center;
@@ -65,4 +75,14 @@
     border: 3px black solid;
     padding: 5px;
     width: auto
+}
+
+.single_button_container button:hover{
+    background-color: rgb(195, 125, 100);
+}
+
+.but.single_button_container button:active{
+    background-color: rgb(163, 72, 39);
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 #000;  
 }

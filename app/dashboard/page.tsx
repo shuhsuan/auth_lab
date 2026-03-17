@@ -14,7 +14,7 @@ export default function Dashboard() {
   const [users, setUsers] = useState<User[]>([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  // const [currentUser, setCurrentUser] = ()
+  const [currentUser, setCurrentUser] = useState<User>()
 
   const router = useRouter();
 
@@ -64,7 +64,9 @@ export default function Dashboard() {
     });
 
     const data = await res.json();
-    console.log(data);
+    setCurrentUser(data.user)
+
+    console.log(data.user)
   }
 
 
@@ -92,6 +94,12 @@ export default function Dashboard() {
         <div className="single_button_container">
           <button onClick={getProfile}>Get my profile</button>
         </div>
+
+        {currentUser? (
+          <div className="card_container">
+          <UserCard key={currentUser.id} id={currentUser.id} name={currentUser.name} email={currentUser.email}/> 
+          </div>
+        ) : null}
       </div>
     </div>
   );
