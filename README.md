@@ -6,5 +6,13 @@ https://auth-lab-five.vercel.app/
 
 Create a .env.local file:
   
-JWT_SECRET=dfaerighaewfwfkwnakjaifhqw
+JWT_SECRET=SOME_STRING
+
+## Tech Stack: 
+
+- Next.js
+- TypeScript
+- JWT Authentication
+- REST API Routes
+- Vercel Deployment
 
