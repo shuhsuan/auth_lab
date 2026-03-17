@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import "../styles.css"
 import { User } from "@/lib/db";
 import { useRouter } from "next/navigation";
+import UserCard from "../components/UserCard";
 
 // type User = {id: number, name: string, email: string}
 
@@ -17,13 +18,13 @@ export default function Dashboard() {
 
   const router = useRouter();
 
-    useEffect(() => {
-        const token = localStorage.getItem("token");
+  useEffect(() => {
+    const token = localStorage.getItem("token");
 
-        if(!token){
-            router.push("/");
-        }
-    }, [])
+    if (!token) {
+      router.push("/");
+    }
+  }, [])
 
   const getUsers = async () => {
     const res = await fetch('/api/users');
@@ -41,15 +42,15 @@ export default function Dashboard() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({name, email})
+      body: JSON.stringify({ name, email })
     });
 
     setName("");
     setEmail("");
 
-   if(res.ok){
-    await getUsers()
-   }
+    if (res.ok) {
+      await getUsers()
+    }
 
   }
 
@@ -65,26 +66,33 @@ export default function Dashboard() {
     const data = await res.json();
     console.log(data);
   }
-  
+
 
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-row items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        {users.map(user => (
-          <div key={user.id}>
-            <h2>{user.name}</h2>
-            <p>{user.email}</p>
-          </div>
-        ))}
-        <div>
-          <input id="input" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)}/>
-          <input id="input" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-          <button onClick={createUser}>Create User</button>
+    <div className="container">
+      <div className="dashboard_container">
+        <div className="card_container">
+          {users.map(user => (
+            <UserCard key={user.id} id={user.id} name={user.name} email={user.email} />
+          ))}
         </div>
 
-        <button onClick={getProfile}>Profile?</button>
-      </main>
+        <div className="container_form">
+          <h1>New Profile</h1>
+          <div className="inputs">
+            <input placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+            <input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          </div>
+          <div className="buttons">
+            <button onClick={createUser}>Create User</button>
+          </div>
+        </div>
+
+        <div className="buttons">
+          <button onClick={getProfile}>Get my profle</button>
+        </div>
+      </div>
     </div>
   );
 }

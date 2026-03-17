@@ -1,29 +1,60 @@
 .container{
+    min-height: 100vh;
+    place-content: center;
+    overflow-x: hidden;
+}
+
+.container_form{
     display: grid;
     grid-template-rows: auto auto auto;
     gap: 12px;
-    min-height: 100vh;
-    place-content: center;
     justify-items: center;
 }
 
 .inputs{
     display: grid;
-    grid-template-columns: repeat(2, 300px);
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
     justify-content: center;
 }
 
 .inputs input{
     border: 3px black solid;
+    padding: 5px;
 }
 
 .buttons{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 8px;
 }
 
 .buttons button{
     border: 3px black solid;
+    padding: 5px;
 }
+
+.card_container{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    justify-content: center;
+    justify-items: center;
+    background-color: blanchedalmond;
+}
+
+.card{
+    border: 1px solid black;
+    border-radius: 12px;
+    padding: 16px;
+    background-color:antiquewhite;
+}
+
+.dashboard_container{
+    display: grid;
+    grid-template-rows: auto auto auto;
+    /* justify-items: center; */
+    /* align-content: center; */
+    gap: 30px
+}
+

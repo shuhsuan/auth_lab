@@ -34,17 +34,19 @@ export default function LoginPage() {
 
   return (
     <div className="container">
+    <div className="container_form">
       <h1>Login</h1>
 
       <div className="inputs">
         <input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
 
         <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      </          div>
+      </div>
       <div className="buttons">
         <button onClick={login}>Login</button>
         <button onClick={register}>Register</button>
       </div>
+    </div>
     </div>
   )
 }
