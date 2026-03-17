@@ -23,7 +23,7 @@ export default function LoginPage() {
 
     if (data.token) {
       localStorage.setItem("token", data.token);
-      alert("Logged in");
+      // alert("Logged in");
       router.push("/dashboard")
     }
   };
