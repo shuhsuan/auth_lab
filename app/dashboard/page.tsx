@@ -89,8 +89,8 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="buttons">
-          <button onClick={getProfile}>Get my profle</button>
+        <div className="single_button_container">
+          <button onClick={getProfile}>Get my profile</button>
         </div>
       </div>
     </div>

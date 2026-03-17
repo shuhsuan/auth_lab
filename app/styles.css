@@ -1,56 +1,54 @@
-.container{
+.container {
     min-height: 100vh;
     place-content: center;
     overflow-x: hidden;
 }
 
-.container_form{
+.container_form {
     display: grid;
     grid-template-rows: auto auto auto;
     gap: 12px;
     justify-items: center;
 }
 
-.inputs{
+.inputs {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 16px;
     justify-content: center;
 }
 
-.inputs input{
+.inputs input {
     border: 3px black solid;
     padding: 5px;
 }
 
-.buttons{
+.buttons {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 8px;
 }
 
-.buttons button{
+.buttons button {
     border: 3px black solid;
     padding: 5px;
 }
 
-.card_container{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 15px;
+.card_container {
+    display: flex;
     justify-content: center;
-    justify-items: center;
-    background-color: blanchedalmond;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
-.card{
+.card {
     border: 1px solid black;
     border-radius: 12px;
     padding: 16px;
-    background-color:antiquewhite;
+    background-color: antiquewhite;
 }
 
-.dashboard_container{
+.dashboard_container {
     display: grid;
     grid-template-rows: auto auto auto;
     /* justify-items: center; */
@@ -58,3 +56,13 @@
     gap: 30px
 }
 
+.single_button_container {
+    display: flex;
+    justify-content: center;
+}
+
+.single_button_container button {
+    border: 3px black solid;
+    padding: 5px;
+    width: auto
+}
