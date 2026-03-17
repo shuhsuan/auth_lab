@@ -1,3 +1,29 @@
-#input{
-    border: 1px solid blue;
+.container{
+    display: grid;
+    grid-template-rows: auto auto auto;
+    gap: 12px;
+    min-height: 100vh;
+    place-content: center;
+    justify-items: center;
+}
+
+.inputs{
+    display: grid;
+    grid-template-columns: repeat(2, 300px);
+    gap: 20px;
+    justify-content: center;
+}
+
+.inputs input{
+    border: 3px black solid;
+}
+
+.buttons{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.buttons button{
+    border: 3px black solid;
 }
