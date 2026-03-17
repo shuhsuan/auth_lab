@@ -1,11 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const router = useRouter();
 
     const register = async () => {
         const res = await fetch("/api/register", {
@@ -17,6 +20,9 @@ export default function RegisterPage() {
         });
 
         const data = await res.json();
+        if(data){
+            router.push("/")
+        }
     }
 
     return(

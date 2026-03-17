@@ -1,63 +1,46 @@
-'use client' //this is new :o next.js specific
+"use client";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-import { useState, useEffect } from "react";
-import './styles.css'
-import { User } from "@/lib/db";
+export default function LoginPage(){
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-// type User = {id: number, name: string, email: string}
+    const router = useRouter();
 
+    const login = async () => {
+        const res = await fetch("/api/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({email, password})
+        });
 
-export default function Home() {
-  const [users, setUsers] = useState<User[]>([]);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+        const data = await res.json();
 
-  const getUsers = async () => {
-    const res = await fetch('/api/users');
-    const usersRes = await res.json();
-    setUsers(usersRes);
-  };
+        if(data.token){
+            localStorage.setItem("token", data.token);
+            alert("Logged in");
+            router.push("/dashboard")
+        }
+    };
 
-  useEffect(() => {
-    getUsers();
-  }, []);
+    const register = () => {
+      router.push("/register")
+    }
 
-  const createUser = async () => {
-    const res = await fetch("/api/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({name, email})
-    });
-
-    setName("");
-    setEmail("");
-
-   if(res.ok){
-    await getUsers()
-   }
-
-  }
-  
-
-
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-row items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        {users.map(user => (
-          <div key={user.id}>
-            <h2>{user.name}</h2>
-            <p>{user.email}</p>
-          </div>
-        ))}
+    return (
         <div>
-          <input id="input" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)}/>
-          <input id="input" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-          <button onClick={createUser}>Create User</button>
+            <h1>Login</h1>
+
+            <input placeholder = "Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+
+            <input type = "password" placeholder = "Password" value = {password} onChange={(e) => setPassword(e.target.value)} />
+
+            <button onClick={login}>Login</button>
+            <button onClick={register}>Register</button>
         </div>
-      </main>
-    </div>
-  );
+    )
 }
