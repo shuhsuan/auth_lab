@@ -1,4 +1,4 @@
-import { NextResponse, userAgentFromString } from "next/server";
+import { NextResponse } from "next/server";
 import { users } from "@/lib/db";
 
 export async function GET() {
@@ -12,7 +12,6 @@ export async function POST(req: Request) {
     try {
         const body = await req.json();
         const { name, email } = body;
-        console.log(body)
 
         if (!name || !email) {
             return NextResponse.json(
@@ -25,6 +24,7 @@ export async function POST(req: Request) {
             id: users.length + 1,
             name,
             email,
+            passwordHash: ""
         };
 
         users.push(newUser);
