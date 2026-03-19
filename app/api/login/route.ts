@@ -27,7 +27,7 @@ export async function POST(req: Request){
         if(!validPassword){
             return NextResponse.json(
                 {error: "Invalid credentials"},
-                {status: 400}
+                {status: 401}
             );
         }
 

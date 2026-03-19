@@ -11,7 +11,7 @@ export default function LoginPage() {
   const router = useRouter();
 
   const login = async () => {
-    const res = await fetch("/api/login", {
+    const res = await fetch("https://9t9772b858.execute-api.eu-west-2.amazonaws.com/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -27,6 +27,12 @@ export default function LoginPage() {
       router.push("/dashboard")
     }
   };
+
+  // const login = async () => {
+  //   try{
+
+  //   }
+  // }
 
   const register = () => {
     router.push("/register")

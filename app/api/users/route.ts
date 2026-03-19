@@ -2,8 +2,12 @@ import { NextResponse } from "next/server";
 import { users } from "@/lib/db";
 
 export async function GET() {
-    return NextResponse.json(users);
-} //I guess with a db it'd be something like db.query ("select id, name, email from users")
+    // return NextResponse.json(users);
+    const res = await fetch("https://yl3d.execute-api.us-east-1.amazonaws.com/users");
+    const data = await res.json();
+
+    return NextResponse.json(data);
+}
 
 
 export async function POST(req: Request) {
@@ -28,7 +32,7 @@ export async function POST(req: Request) {
         };
 
         users.push(newUser);
-        return NextResponse.json(newUser, {status: 200})
+        return NextResponse.json(newUser, { status: 200 })
     }
     catch (erorr) {
         return NextResponse.json(

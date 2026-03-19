@@ -15,6 +15,7 @@ export default function Dashboard() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [currentUser, setCurrentUser] = useState<User>()
+  const [password, setPassword] = useState("temporary")
 
   const router = useRouter();
 
@@ -27,7 +28,7 @@ export default function Dashboard() {
   }, [])
 
   const getUsers = async () => {
-    const res = await fetch('/api/users');
+    const res = await fetch("https://9t9772b858.execute-api.eu-west-2.amazonaws.com/users");
     const usersRes = await res.json();
     setUsers(usersRes);
   };
@@ -37,12 +38,12 @@ export default function Dashboard() {
   }, []);
 
   const createUser = async () => {
-    const res = await fetch("/api/users", {
+    const res = await fetch("https://9t9772b858.execute-api.eu-west-2.amazonaws.com/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, email })
+      body: JSON.stringify({ name, email, password })
     });
 
     setName("");

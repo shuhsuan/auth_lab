@@ -13,7 +13,7 @@ export default function RegisterPage() {
     const router = useRouter();
 
     const register = async () => {
-        const res = await fetch("/api/register", {
+        const res = await fetch("https://9t9772b858.execute-api.eu-west-2.amazonaws.com/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

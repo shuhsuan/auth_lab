@@ -1,0 +1,56 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: sheba
+
+service: auth-lab
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: eu-west-2
+  environment:
+    JWT_SECRET: dfaerighaewfwfkwnakjaifhqw
+  httpApi:
+    cors:
+      allowedOrigins:
+        - "*"
+      allowedHeaders:
+        - Content-Type
+      allowedMethods:
+        - GET
+        - POST
+        - OPTIONS
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+          Resource: "*"
+
+functions:
+  getUsers:
+    handler: handler.getUsers
+    events:
+      - httpApi:
+          path: /users
+          method: get
+  createUser:
+    handler: handler.createUser
+    events:
+      - httpApi:
+          path: /users
+          method: post
+  login:
+    handler: handler.login
+    events: 
+      - httpApi:
+          path: /login
+          method: post
+  registerUser:
+    handler: handler.registerUser
+    events:
+      - httpApi:
+          path: /register
+          method: post
