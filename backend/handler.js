@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { dynamo } = require("./db");
-const { GetCommand, PutCommand, ScanCommand } = require("@aws-sdk/lib-dynamodb");
+const { GetCommand, PutCommand, ScanCommand, DeleteCommand } = require("@aws-sdk/lib-dynamodb");
 const JWT_SECRET = process.env.JWT_SECRET;
 
 const headers = {
@@ -34,8 +34,7 @@ module.exports.getUsers = async () => {
 };
 
 module.exports.login = async (event) => {
-  console.log("JWT_SECRET_PROCESS:", process.env.JWT_SECRET);
-   console.log("JWT_SECRET:", JWT_SECRET);
+
   try {
     const body = JSON.parse(event.body);
     const { email, password } = body;
@@ -207,4 +206,114 @@ module.exports.registerUser = async (event) => {
     };
   }
 };
+
+////
+
+module.exports.getProfile = async (event) => {
+  try{
+    const authHeader = event.headers.authorization || event.headers.Authorization;
+
+    console.log(authHeader)
+
+    if(!authHeader){
+      return{
+        statusCode: 401,
+        headers,
+        body: JSON.stringify({error: "No token provided"}),
+      };
+    }
+
+    const token = authHeader.split(" ")[1];
+
+    const decoded = jwt.verify(token, JWT_SECRET);
+
+    const result = await dynamo.send(
+      new GetCommand({
+        TableName: "Users",
+        Key: { email: decoded.email },
+      })
+    );
+
+    const user = result.Item;
+
+    if(!user){
+      return{
+        statusCode: 404,
+        headers,
+        body: JSON.stringify({error: "User not found"}),
+      };
+    }
+
+    return{
+      statusCode: 200,
+      headers,
+      body: JSON.stringify({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      }),
+    };
+  } catch (err) {
+    console.error("GET PROFILE ERROR:", err);
+
+    return{
+      statusCode: 401,
+      headers,
+      body: JSON.stringify({error: "Invalid token"})
+    }
+  }
+}
+
+/////
+
+module.exports.deleteProfile = async (event) => {
+  try{
+    const authHeader = event.headers.authorization || event.headers.Authorization;
+
+    if(!authHeader){
+      return{
+        statusCode: 401,
+        headers,
+        body: JSON.stringify({error: "No token provided"}),
+      };
+    }
+
+    const token = authHeader.split(" ")[1];
+    const decoded = jwt.verify(token, JWT_SECRET);
+
+    const body = JSON.parse(event.body);
+    const {email} = body;
+
+        console.log("deleting: " + email)
+
+    if(!email){
+      return{
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({error: "Email required"})
+      }
+    }
+
+    await dynamo.send(
+      new DeleteCommand({
+        TableName: "Users",
+        Key: {email},
+      })
+    );
+
+    return{
+      statusCode: 200,
+      headers,
+      body: JSON.stringify({ message: "User deleted" }),
+    };
+  } catch (err) {
+    console.error("Delete profile erorr: ", err);
+
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({error: "Server error"})
+    }
+  }
+}
 

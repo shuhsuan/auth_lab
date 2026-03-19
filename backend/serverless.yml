@@ -15,9 +15,11 @@ provider:
         - "*"
       allowedHeaders:
         - Content-Type
+        - Authorization
       allowedMethods:
         - GET
         - POST
+        - DELETE
         - OPTIONS
   iam:
     role:
@@ -27,6 +29,7 @@ provider:
             - dynamodb:Scan
             - dynamodb:GetItem
             - dynamodb:PutItem
+            - dynamodb:DeleteItem
           Resource: "*"
 
 functions:
@@ -54,3 +57,15 @@ functions:
       - httpApi:
           path: /register
           method: post
+  getProfile:
+    handler: handler.getProfile
+    events:
+      - httpApi:
+          path: /profile
+          method: get
+  deleteProfile:
+    handler: handler.deleteProfile
+    events:
+      - httpApi:
+          path: /profile
+          method: delete

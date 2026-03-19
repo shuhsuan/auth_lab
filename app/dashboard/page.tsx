@@ -58,18 +58,35 @@ export default function Dashboard() {
   const getProfile = async () => {
     const token = localStorage.getItem("token");
 
-    const res = await fetch("/api/profile", {
+    const res = await fetch("https://9t9772b858.execute-api.eu-west-2.amazonaws.com/profile", {
+      method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
 
     const data = await res.json();
-    setCurrentUser(data.user)
-
-    console.log(data.user)
+    setCurrentUser(data)
   }
 
+  const deleteProfile = async (emailOfProfileToDelete: string) => {
+    const token = localStorage.getItem("token");
+    const res = await fetch("https://9t9772b858.execute-api.eu-west-2.amazonaws.com/profile", {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ email: emailOfProfileToDelete }),
+    });
+
+    const data = await res.json();
+
+    if(res.ok){
+      getUsers();
+    }else{
+      console.error(data.error)
+    }
+  }
 
 
   return (
@@ -77,7 +94,7 @@ export default function Dashboard() {
       <div className="dashboard_container">
         <div className="card_container">
           {users.map(user => (
-            <UserCard key={user.id} id={user.id} name={user.name} email={user.email} />
+            <UserCard key={user.id} id={user.id} name={user.name} email={user.email} onClick={deleteProfile} />
           ))}
         </div>
 
@@ -98,7 +115,7 @@ export default function Dashboard() {
 
         {currentUser? (
           <div className="card_container">
-          <UserCard key={currentUser.id} id={currentUser.id} name={currentUser.name} email={currentUser.email}/> 
+          <UserCard key={currentUser.id} id={currentUser.id} name={currentUser.name} email={currentUser.email} onClick={deleteProfile}/> 
           </div>
         ) : null}
       </div>
