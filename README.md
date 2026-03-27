@@ -31,7 +31,7 @@ https://auth-lab-five.vercel.app/
 
 ## Testing 
 
-### Jest - Unit Testing (backend/)
+### Jest - Unit Testing (backend)
 
 Tests JWT in isolation, dependencies mocked so tests run offline and fast
 
