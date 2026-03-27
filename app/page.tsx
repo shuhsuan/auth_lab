@@ -7,6 +7,7 @@ import './styles.css'
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const router = useRouter();
 
@@ -23,16 +24,13 @@ export default function LoginPage() {
 
     if (data.token) {
       localStorage.setItem("token", data.token);
-      // alert("Logged in");
       router.push("/dashboard")
     }
+
+    if(data.error){
+      setError(data.error);
+    }
   };
-
-  // const login = async () => {
-  //   try{
-
-  //   }
-  // }
 
   const register = () => {
     router.push("/register")
@@ -52,6 +50,7 @@ export default function LoginPage() {
         <button onClick={login}>Login</button>
         <button onClick={register}>Register</button>
       </div>
+      {error? <p>{error}</p> : <></>}
     </div>
     </div>
   )
