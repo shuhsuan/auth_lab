@@ -1,4 +1,4 @@
-//temporary db to test backend functions, not exposing passwords or logic like this in a real project
+//temporary db to test backend functions locally, not exposing passwords or logic like this in a real project
 
 export type User = {
     id: number;
