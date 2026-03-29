@@ -7,8 +7,10 @@ https://auth-lab-five.vercel.app/
 ## Set up locally:
 
 - Pull repo
-- cd auth_lab
-- Run npm run start
+```bash
+cd auth_lab
+npm run start
+```
 
 ## Tech Stack: 
 
